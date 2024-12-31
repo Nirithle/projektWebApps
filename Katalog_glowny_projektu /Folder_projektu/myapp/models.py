@@ -30,3 +30,25 @@ class Person(models.Model):
 
     def __str__(self):
         return self.name
+
+class Osoba(models.Model):
+    PLEC_CHOICES = (
+        ("K", "Kobieta"),
+        ("M", "Mężczyzna"),
+        ("I", "Inna"),
+    )
+    imie = models.CharField(max_length=40, blank = False, null = False)
+    nazwisko = models.CharField(max_length=60, blank = False, null = False)
+    plec = models.CharField(max_length=1, choices = PLEC_CHOICES, default = PLEC_CHOICES[2][0])
+    stanowisko = models.ForeignKey("Stanowisko", on_delete = models.CASCADE)
+
+    def __str__(self):
+        return f'(self.imie){self.nazwisko}'
+        #return str(self.imie) + " " + str(self.nazwisko)
+
+class Stanowisko(models.Model):
+    nazwa = models.CharField(max_length=80, blank = False, null = False)
+    opis = models.TextField(blank = False, null = False)
+
+    def __str__(self):
+        return self.name
